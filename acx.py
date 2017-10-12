@@ -27,8 +27,8 @@ def main(filterList, numRatings, amzRank):
     ## create URL
     ## get results
     url = createURL(filterList)
-    numResults = getNumResults(url)
-    numPages = math.ceil(numResults/30)
+    numPages = getNumPages(url)
+    ##visitACXURL(url,numPages)
     print(url)
     ## compare results with previous results on ledger
     ## check new results' sales ranking and number of ratings
@@ -51,16 +51,38 @@ def createURL(filterList):
     url += "&keywords=&pageIndex=1"
     return url
 
-def getNumResults(url):
+def grabUserPreferences(fileName):
+    userpref = open(fileName, 'r')
+    read_data = userpref.read()
+    userpref.close()
+    return read_data
+
+def parseUserPreferences(userPrefString, numPrefs):
+    prefs = userPrefString.split(",")
+    for i in range(len(prefs)):
+        if "\n" in prefs[i]:
+            prefs[i] = prefs[i].replace("\n", "")
+    return prefs
+
+def getNumPages(url):
+    ## go to URL and get num results
     numResults= 10
     ## test vale for numResults right now
-    return numResults
+    numPages = math.ceil(numResults/30)
+    return numPages
+
+##def visitACXURL(url,pageNum):
+    
+    ## for each page
+        ## for each book
+            ## check ratings number and amzscore
+                # if good, record to outward file
+    
 
 def ui():
     ## user interface level
     ## currently just calls main with test values
-    
-    filterList = [0,0,"$$","$$","$$","$$","$$","$$","$$"]
+    filterList = parseUserPreferences(grabUserPreferences("user_pref.csv"), 9)
     numRatings = 50
     amzRank = 20000
     main(filterList,numRatings,amzRank)
