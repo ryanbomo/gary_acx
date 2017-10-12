@@ -16,11 +16,14 @@
 ##  Not sure in what way to do it, but this is a later thing to be worked out
 ##  down the road.
 ##
+##Other work referenced/used:
+##  1. N/A
+##
 ##This program assumes no copyright of any referenced work, and any usage of 
 ##copyrighted work is being done under Fair Use for educational purposes or with 
 ##respect to the license of the work.  Where outside work may have been used
-##either explicitly or for inspiration, it has been listed in the "Other files
-##referenced/used in this one:" section of the header.
+##either explicitly or for inspiration, it has been listed in the "Other work
+##referenced/used:" section of the header.
 import math
 
 def main(filterList, numRatings, amzRank):
