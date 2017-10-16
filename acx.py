@@ -25,10 +25,10 @@
 ##either explicitly or for inspiration, it has been listed in the "Other work
 ##referenced/used:" section of the header.
 import math
+import bs4,requests
 
 def main(filterList, numRatings, amzRank):
     ## create URL
-    ## get results
     url = createURL(filterList)
     numPages = getNumPages(url)
     ##visitACXURL(url,numPages)
@@ -79,15 +79,32 @@ def getNumPages(url):
     ## for each page
         ## for each book
             ## check ratings number and amzscore
-                # if good, record to outward file
+                # if good, writeLedger(infoString)
+
+def writeLedger(infoString):
+    ledger = open("ledger.csv",'w+')
+    ##write info
+    ledger.close()
     
+## Gets search pref from user_pref.csv
+## gets min number of ratings and min amz rank from input, makes them an int
 
 def ui():
-    ## user interface level
-    ## currently just calls main with test values
     filterList = parseUserPreferences(grabUserPreferences("user_pref.csv"), 9)
-    numRatings = 50
-    amzRank = 20000
+    print(''' We will now ask you for your non-acx preferences.  These include minimum
+number of ratings and minimum allowable amazon sales rank.  This program does
+not store these values in this iteration.  You should remember them for each
+time you perform this search.''')
+    try:
+        numRatings = int(input("What is the min number of ratings?\n"))
+    except ValueError:
+        print("Not a number, using default number of ratings (50)")
+        numRatings = 50
+    try:
+        amzRank = int(input("What's the maximum amz rank?\n"))
+    except ValueError:
+        print("Not a number, using default min rank of 200000")
+        amzRank = 200000
     main(filterList,numRatings,amzRank)
 
 
