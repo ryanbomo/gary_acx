@@ -14,6 +14,18 @@ Below are the curent features for the ACX Crawler:
 
   * Generate URL based on filter list
 
+
+
+### To Be Implemented
+
+Below is a bullet form list of the tasks still to complete for Phase 1. This list is by no means final or exhaustive, and will be updated as tasks develop:
+
+  * User manual to translate ACX options to numbers used by this program
+  * Implement Results Retrieval
+  * Implement Results storage and comparison - to avoid finding previously found jobs
+  * Implement Ledger Reading and Writing
+
+
 ### User Manual
 
 To be written once use is started.
