@@ -25,14 +25,15 @@
 ##either explicitly or for inspiration, it has been listed in the "Other work
 ##referenced/used:" section of the header.
 import math
-import bs4,requests
+from urllib.request import urlopen
+import bs4
 
 def main(filterList, numRatings, amzRank):
     ## create URL
     url = createURL(filterList)
-    numPages = getNumPages(url)
-    ##visitACXURL(url,numPages, numRatings, amzRank)
-    print(url)
+    results = buildResultsList(url)
+    validResultsList = checkResults(results, numRatings, amzRank)
+    writeLedger(validResultsList)
     ## compare results with previous results on ledger
     ## check new results' sales ranking and number of ratings
     ## add new stuff to ledger
@@ -67,21 +68,22 @@ def parseUserPreferences(userPrefString, numPrefs):
             prefs[i] = prefs[i].replace("\n", "")
     return prefs
 
-def getNumPages(url):
-    ## go to URL and get num results
-    numResults= 10
-    ## test vale for numResults right now
-    numPages = math.ceil(numResults/30)
-    return numPages
+def buildResultsList(url):
+    resultsList = []
+    page = urlopen(url)
+    soup = bs4.BeautifulSoup(page)
+    result_1 = soup.find_all("div", class_="searchResult")
+    print(result_1)
+    print(url)
+    return resultsList
 
-##def visitACXURL(url,pageNum, numRatings, amzRank):
-    
-    ## for each page
-        ## for each book
-            ## check ratings number and amzscore
-                # if good, writeLedger(infoString)
+def checkResults(listResults, numRatings, amzRank):
+    print(listResults)
+    print(numRatings)
+    print(amzRank)
+    print("got here")
 
-def writeLedger(infoString):
+def writeLedger(validResultsList):
     ledger = open("ledger.csv",'w+')
     ##write info
     ledger.close()
