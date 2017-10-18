@@ -40,7 +40,7 @@ def main(filterList, numRatings, amzRank):
 
 def createURL(filterList):
     ## create URL based on user filters
-    url = "http://www.acx.com/ts#field_genreExclusions=NONE"
+    url = "http://www.acx.com/tsAjax/ref=acx_ts_sb_an?field_genreExclusions=NONE"
     templateList = ["&field_gender=ACXGD", "&field_comp=ACXCR",
                     "&field_genre=ACXFG", "&field_fiction=ACXFN",
                     "&field_language=ACXLG", "&field_accent=ACXAC",
@@ -70,17 +70,25 @@ def parseUserPreferences(userPrefString, numPrefs):
 
 def buildResultsList(url):
     resultsList = []
+    ## get num pages
+    ## for each page
+        ## open page
+        ## get results
     page = urlopen(url)
     soup = bs4.BeautifulSoup(page)
-    result_1 = soup.find_all("div", class_="searchResult")
-    print(result_1)
+    result_1 = soup.find_all("div", class_="resultInfo")
+    for i in range(len(result_1)):
+        print(result_1[i])
+        print(type(result_1[i]))
+        print("\n")
+
     print(url)
     return resultsList
 
 def checkResults(listResults, numRatings, amzRank):
-    print(listResults)
-    print(numRatings)
-    print(amzRank)
+    #print(listResults)
+    #print(numRatings)
+    #print(amzRank)
     print("got here")
 
 def writeLedger(validResultsList):
