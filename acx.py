@@ -31,7 +31,7 @@ def main(filterList, numRatings, amzRank):
     ## create URL
     url = createURL(filterList)
     numPages = getNumPages(url)
-    ##visitACXURL(url,numPages)
+    ##visitACXURL(url,numPages, numRatings, amzRank)
     print(url)
     ## compare results with previous results on ledger
     ## check new results' sales ranking and number of ratings
@@ -74,7 +74,7 @@ def getNumPages(url):
     numPages = math.ceil(numResults/30)
     return numPages
 
-##def visitACXURL(url,pageNum):
+##def visitACXURL(url,pageNum, numRatings, amzRank):
     
     ## for each page
         ## for each book
