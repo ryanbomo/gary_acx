@@ -76,7 +76,7 @@ def buildResultsList(url):
         ## get results
     page = urlopen(url)
     soup = bs4.BeautifulSoup(page)
-    result_1 = soup.find_all("div", class_="resultInfo")
+    result_1 = soup.find_all("span", class_="pagination")
     for i in range(len(result_1)):
         print(result_1[i])
         print(type(result_1[i]))
