@@ -24,9 +24,8 @@
 ##respect to the license of the work.  Where outside work may have been used
 ##either explicitly or for inspiration, it has been listed in the "Other work
 ##referenced/used:" section of the header.
-import math
+import math,re,bs4
 from urllib.request import urlopen
-import bs4
 
 def main(filterList, numRatings, amzRank):
     ## create URL
@@ -52,7 +51,7 @@ def createURL(filterList):
             temp += templateList[i]+str(filterList[i])
             url += temp
             
-    url += "&keywords=&pageIndex=1"
+    url += "&keywords=&pageIndex="
     return url
 
 def grabUserPreferences(fileName):
@@ -69,26 +68,54 @@ def parseUserPreferences(userPrefString, numPrefs):
     return prefs
 
 def buildResultsList(url):
+    firstPage = url +"1"
+    #go to website
     resultsList = []
-    ## get num pages
-    ## for each page
-        ## open page
-        ## get results
-    page = urlopen(url)
+    page = urlopen(firstPage)
     soup = bs4.BeautifulSoup(page)
-    result_1 = soup.find_all("span", class_="pagination")
-    for i in range(len(result_1)):
-        print(result_1[i])
-        print(type(result_1[i]))
-        print("\n")
 
-    print(url)
+    # get page numbers
+    numResults = int(soup.find('input', {'id': 'jsValueSearchCount'}).get('value'))
+    pageNum = math.ceil(numResults/30)
+    print(pageNum)
+    
+    # create array list of results pages
+    listResults = []
+    for i in range(pageNum):
+        ender = i+1
+        thisURL = url + str(ender)
+        listResults.append(thisURL)
+
+    # visit each results page and grab match links
+    for i in range(len(listResults)):
+        thisPage = urlopen(listResults[i])
+        soup = bs4.BeautifulSoup(thisPage)
+        result_1 = soup.find_all("div",class_="resultInfo")
+        for j in range(len(result_1)):
+            address = result_1[j].find_all("a",href = True)
+            resultsList.append(address[0]['href'])
     return resultsList
 
 def checkResults(listResults, numRatings, amzRank):
-    #print(listResults)
-    #print(numRatings)
-    #print(amzRank)
+    coreURL = "www.acx.com"
+    # check each result
+    for i in range(len(listResults)):
+        #build result URL
+        print(listResults[i])
+        thisURL = coreURL + listResults[i]
+        print(thisURL)
+        print("\n")
+        #open each result page
+        page = urlopen(thisURL)
+        soup = bs4.BeautifulSoup(page)
+        #get amz rank and number of ratings
+        result_1 = soup.find_all("div", class_="titleDetailField")
+        result_2 = result_1.find_all("div", class_="titleDetailFieldValue")
+        #check ratings and append if pass
+        
+        
+    print(numRatings)
+    print(amzRank)
     print("got here")
 
 def writeLedger(validResultsList):
