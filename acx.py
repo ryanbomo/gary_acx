@@ -30,12 +30,12 @@ from urllib.request import urlopen
 def main(filterList, numRatings, amzRank):
     ## create URL
     url = createURL(filterList)
+    ## get list of results
     results = buildResultsList(url)
+    ## check for valid results to user modified query
     validResultsList = checkResults(results, numRatings, amzRank)
+    ## write narrowed results to ledger
     writeLedger(validResultsList)
-    ## compare results with previous results on ledger
-    ## check new results' sales ranking and number of ratings
-    ## add new stuff to ledger
 
 def createURL(filterList):
     ## create URL based on user filters
@@ -112,8 +112,6 @@ def checkResults(listResults, numRatings, amzRank):
         result_1 = soup.find_all("div", class_="titleDetailField")
         result_2 = result_1.find_all("div", class_="titleDetailFieldValue")
         #check ratings and append if pass
-        
-        
     print(numRatings)
     print(amzRank)
     print("got here")
