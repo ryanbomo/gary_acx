@@ -40,6 +40,7 @@ def main(filterList, numRatings, amzRank):
 def createURL(filterList):
     ## create URL based on user filters
     url = "http://www.acx.com/tsAjax/ref=acx_ts_sb_an?field_genreExclusions=NONE"
+    ## New URL is : ?keywords=&sortBy=CREATION_DATE&pageIndex=1&field_gender=ACXGD0&
     templateList = ["&field_gender=ACXGD", "&field_comp=ACXCR",
                     "&field_genre=ACXFG", "&field_fiction=ACXFN",
                     "&field_language=ACXLG", "&field_accent=ACXAC",
